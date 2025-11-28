@@ -1,0 +1,250 @@
+---
+title: "Perbandingan Indeks Prestasi Kumulatif Mahasiswa Bekerja dan Tidak Bekerja Berdasarkan Uji Dua Populasi"
+author: "ADS_9_RA"
+date: "2025-11-25"
+output: pdf_document
+---
+
+```{r}
+# Metode Ukuran penyebaran  dan penyebaran data;Eskplorasi Data
+
+# 1. Import Data
+
+library(readr)
+library(dplyr)
+library(car)
+
+data <- read_csv("Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa  (3).csv")
+
+# 2. Pilih variabel dan bersihkan data
+
+df <- data[, c("IPK", "Pekerjaan sekarang")]
+names(df) <- c("IPK", "Pekerjaan")
+
+# Hapus missing values
+df <- na.omit(df)
+
+# 3. Cleaning Kategori Pekerjaan
+
+print("Nilai unik pekerjaan sebelum cleaning:")
+print(unique(df$Pekerjaan))
+
+df$Pekerjaan <- df$Pekerjaan |>
+  trimws() |>
+  tolower() |>
+  gsub("[^a-z ]", "", x = _) |> 
+  gsub(" +", " ", x = _)
+
+df$Pekerjaan <- case_when(
+  df$Pekerjaan %in% c("tidak bekerja", "tidak kerja", "belum bekerja") ~ "Tidak Bekerja",
+  df$Pekerjaan %in% c("paruh waktu", "part time") ~ "Paruh Waktu",
+  df$Pekerjaan %in% c("penuh waktu", "full time") ~ "Penuh Waktu",
+  TRUE ~ NA_character_
+)
+
+print("Nilai unik pekerjaan setelah cleaning:")
+print(unique(df$Pekerjaan))
+
+df$Kelompok <- factor(df$Pekerjaan,
+                      levels = c("Tidak Bekerja", "Paruh Waktu", "Penuh Waktu"))
+
+# 4. Cleaning IPK
+
+df_clean <- df %>%
+  filter(IPK > 0 & IPK <= 4)
+
+print("Distribusi kategori setelah cleaning:")
+print(table(df_clean$Kelompok))
+
+# 5. Gabung Tabel Min,Max + Mean,Median,SD
+
+tabel_min_max <- df_clean %>%
+  group_by(Kelompok) %>%
+  summarise(
+    Min_IPK = min(IPK, na.rm = TRUE),
+    Max_IPK = max(IPK, na.rm = TRUE),
+    Total = n(),
+    .groups = "drop"
+  )
+
+tabel_stat <- df_clean %>%
+  group_by(Kelompok) %>%
+  summarise(
+    Mean_IPK = mean(IPK, na.rm = TRUE),
+    Median_IPK = median(IPK, na.rm = TRUE),
+    SD_IPK = sd(IPK, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+tabel_gabungan <- tabel_min_max %>%
+  left_join(tabel_stat, by = "Kelompok")
+
+print("TABEL GABUNGAN:")
+print(tabel_gabungan)
+
+# 6. BOXplot Visualisasi
+
+warna <- c("#87CEEB80", "#90EE9080", "#FFB6C180")
+
+boxplot(IPK ~ Kelompok,
+        data = df_clean,
+        main = "IPK Berdasarkan Status Pekerjaan (Setelah Cleaning)",
+        xlab = "Status Pekerjaan",
+        ylab = "IPK Terakhir",
+        col = warna,
+        border = c("darkblue", "darkgreen", "darkred"),
+        ylim = c(0, 4))
+
+stripchart(IPK ~ Kelompok,
+           data = df_clean,
+           vertical = TRUE, method = "jitter",
+           pch = 16, col = "gray40", add = TRUE)
+
+# 7a. Histogram IPK (Setelah Cleaning)
+
+hist(df_clean$IPK,
+     main = "Histogram IPK Mahasiswa (Setelah Cleaning)",
+     xlab = "IPK",
+     ylab = "Frekuensi",
+     col = "#ADD8E680",
+     border = "black",
+     breaks = 10)
+
+# 7b. Histogram IPK Berdasarkan Kelompok Pekerjaan
+
+par(mfrow = c(1,3))  # menampilkan 3 histogram berdampingan
+
+for(k in levels(df_clean$Kelompok)) {
+  hist(df_clean$IPK[df_clean$Kelompok == k],
+       main = paste("Histogram IPK -", k),
+       xlab = "IPK",
+       col = "#FFDAB980",
+       border = "black",
+       breaks = 8,
+       xlim = c(0,4))
+}
+
+par(mfrow = c(1,1))  # reset layout
+
+
+```
+
+```{r}
+#Uji Hipotesis Dua Populasi
+
+# Load Library
+library(readr)
+library(dplyr)
+library(car)
+library(knitr)
+library(broom)
+
+# 1. Import Data
+
+data <- read_csv("Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa  (3).csv")
+
+# 2. Pilih variabel dan bersihkan data
+
+df <- data[, c("IPK", "Pekerjaan sekarang")]
+names(df) <- c("IPK", "Pekerjaan")
+
+df <- na.omit(df)
+
+# 3. Cleaning Kategori Pekerjaan
+
+df$Pekerjaan <- df$Pekerjaan |>
+  trimws() |>
+  tolower() |>
+  gsub("[^a-z ]", "", x = _) |> 
+  gsub(" +", " ", x = _)
+
+df$Pekerjaan <- case_when(
+  df$Pekerjaan %in% c("tidak bekerja", "tidak kerja", "belum bekerja") ~ "Tidak Bekerja",
+  df$Pekerjaan %in% c("paruh waktu", "part time") ~ "Paruh Waktu",
+  df$Pekerjaan %in% c("penuh waktu", "full time") ~ "Penuh Waktu",
+  TRUE ~ NA_character_
+)
+
+df$Kelompok <- factor(df$Pekerjaan,
+                      levels = c("Tidak Bekerja", "Paruh Waktu", "Penuh Waktu"))
+
+# 4. Cleaning IPK
+
+df_clean <- df %>%
+  filter(IPK > 0 & IPK <= 4)
+
+# 5. Membuat 2 Kelompok (OPSI A)
+# Opsi A:
+# "Bekerja" = Paruh Waktu + Penuh Waktu (digabung)
+# "Tidak_Bekerja" = kategori khusus
+
+df_clean$Kelompok2 <- case_when(
+  df_clean$Kelompok == "Tidak Bekerja" ~ "Tidak_Bekerja",
+  df_clean$Kelompok %in% c("Paruh Waktu", "Penuh Waktu") ~ "Bekerja",
+  TRUE ~ NA_character_
+)
+
+df_clean$Kelompok2 <- factor(df_clean$Kelompok2,
+                             levels = c("Tidak_Bekerja", "Bekerja"))
+
+# 6. Statistik Deskriptif Tabel
+
+tabel_deskriptif <- df_clean %>%
+  group_by(Kelompok2) %>%
+  summarise(
+    N = n(),
+    Mean = mean(IPK),
+    Median = median(IPK),
+    SD = sd(IPK),
+    Min = min(IPK),
+    Max = max(IPK),
+    .groups = "drop"
+  )
+
+kable(tabel_deskriptif,
+      caption = "Tabel 1. Statistik Deskriptif IPK per Kelompok (Opsi A)")
+
+# 7. Uji Normalitas (SHAPIRO-WILK)
+
+group_A <- df_clean$IPK[df_clean$Kelompok2 == "Tidak_Bekerja"]
+group_B <- df_clean$IPK[df_clean$Kelompok2 == "Bekerja"]
+
+uji_normalitas <- data.frame(
+  Kelompok = c("Tidak_Bekerja", "Bekerja"),
+  W = c(shapiro.test(group_A)$statistic,
+        shapiro.test(group_B)$statistic),
+  p_value = c(shapiro.test(group_A)$p.value,
+              shapiro.test(group_B)$p.value)
+)
+
+kable(uji_normalitas,
+      caption = "Tabel 2. Hasil Uji Normalitas Shapiro–Wilk")
+
+# 8. Uji Homogenitas Varians (LEVENE TEST)
+
+levene_res <- leveneTest(IPK ~ Kelompok2, data = df_clean)
+tabel_levene <- tidy(levene_res)
+
+kable(tabel_levene,
+      caption = "Tabel 3. Uji Homogenitas Varians (Levene Test)")
+
+# 9. Uji t Dua Sampel (Independent t-test)
+
+t_res <- t.test(IPK ~ Kelompok2, data = df_clean, var.equal = TRUE)
+tabel_ttest <- tidy(t_res)
+
+kable(tabel_ttest,
+      caption = "Tabel 4. Hasil Uji t Dua Populasi (Independent Sample t-test)")
+
+# 10. Uji Nonparametrik (MANN–WHITNEY)
+
+mw_res <- wilcox.test(IPK ~ Kelompok2, data = df_clean)
+tabel_mw <- tidy(mw_res)
+
+kable(tabel_mw,
+      caption = "Tabel 5. Hasil Uji Mann–Whitney (Wilcoxon Rank-Sum Test)")
+
+
+
+```
+
