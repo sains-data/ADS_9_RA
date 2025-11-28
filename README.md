@@ -26,44 +26,6 @@
 - Penuh Waktu
 
 # Struktur :
-tugas_besar_ads_2025/
-│
-├── 01_raw_data/
-│   └── Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa (3).csv
-│
-├── 02_data_cleaning/
-│   ├── data_cleaning.ipynb
-│   ├── data_cleaning.R
-│   └── cleaning_report.html
-│
-├── 03_cleaned_data/
-│   ├── dataset_cleaned.csv
-│   └── data_dictionary.csv
-│
-├── 04_analysis_scripts/
-│   ├── exploratory_analysis.R
-│   ├── hypothesis_testing.R
-│   └── data_visualization.R
-│
-├── 05_output_results/
-│   ├── tables/
-│   │   ├── descriptive_statistics.csv
-│   │   ├── normality_test_results.csv
-│   │   ├── t_test_results.csv
-│   │   └── mann_whitney_results.csv
-│   │
-│   ├── figures/
-│   │   ├── boxplot_ipk_pekerjaan.png
-│   │   ├── histogram_ipk.png
-│   │   ├── histogram_by_employment.png
-│   │   └── qq_plot_normalitas.png
-│   │
-│   └── reports/
-│       └── final_analysis_report.html
-│
-├── 06_documentation/
-│   ├── README.md
-│   ├── project_structure.md
-│   └── methodology_explanation.md
-│
-└── run_analysis.R
+<img width="856" height="319" alt="image" src="https://github.com/user-attachments/assets/a46c3369-d810-4bf0-ab11-0b010493b81f" />
+
+
