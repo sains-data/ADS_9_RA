@@ -26,44 +26,44 @@
 - Penuh Waktu
 
 # Struktur :
- tugas_besar_ads_2025/
- │
- ├── 01_raw_data/
- │   └── Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa (3).csv
- │
- ├── 02_data_cleaning/
- │   ├── data_cleaning.ipynb                 # Jupyter Notebook untuk cleaning
- │   ├── data_cleaning.R                     # Script R untuk cleaning  
- │   └── cleaning_report.html                # Laporan hasil cleaning
- │
- ├── 03_cleaned_data/
- │   ├── dataset_cleaned.csv                 # Data yang sudah dibersihkan
- │   └── data_dictionary.csv                 # Dokumentasi variabel
- │
- ├── 04_analysis_scripts/
- │   ├── exploratory_analysis.R              # EDA dan statistik deskriptif
- │   ├── hypothesis_testing.R                # Uji hipotesis
- │   └── data_visualization.R                # Visualisasi
- │
- ├── 05_output_results/
- │   ├── tables/
- │   │   ├── descriptive_statistics.csv
- │   │   ├── normality_test_results.csv
- │   │   ├── t_test_results.csv
- │   │   └── mann_whitney_results.csv
- │   │
- │   ├── figures/
- │   │   ├── boxplot_ipk_pekerjaan.png
- │   │   ├── histogram_ipk.png
- │   │   ├── histogram_by_employment.png
- │   │   └── qq_plot_normalitas.png
- │   │
- │   └── reports/
- │       └── final_analysis_report.html
- │
- ├── 06_documentation/
- │   ├── README.md
- │   ├── project_structure.md
- │   └── methodology_explanation.md
- │
- └── run_analysis.R                         # Script utama untuk menjalankan semua analisis
+tugas_besar_ads_2025/
+│
+├── 01_raw_data/
+│   └── Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa (3).csv
+│
+├── 02_data_cleaning/
+│   ├── data_cleaning.ipynb
+│   ├── data_cleaning.R
+│   └── cleaning_report.html
+│
+├── 03_cleaned_data/
+│   ├── dataset_cleaned.csv
+│   └── data_dictionary.csv
+│
+├── 04_analysis_scripts/
+│   ├── exploratory_analysis.R
+│   ├── hypothesis_testing.R
+│   └── data_visualization.R
+│
+├── 05_output_results/
+│   ├── tables/
+│   │   ├── descriptive_statistics.csv
+│   │   ├── normality_test_results.csv
+│   │   ├── t_test_results.csv
+│   │   └── mann_whitney_results.csv
+│   │
+│   ├── figures/
+│   │   ├── boxplot_ipk_pekerjaan.png
+│   │   ├── histogram_ipk.png
+│   │   ├── histogram_by_employment.png
+│   │   └── qq_plot_normalitas.png
+│   │
+│   └── reports/
+│       └── final_analysis_report.html
+│
+├── 06_documentation/
+│   ├── README.md
+│   ├── project_structure.md
+│   └── methodology_explanation.md
+│
+└── run_analysis.R
