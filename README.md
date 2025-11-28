@@ -26,6 +26,7 @@
 - Penuh Waktu
 
 # Struktur :
-<img width="856" height="319" alt="image" src="https://github.com/user-attachments/assets/a46c3369-d810-4bf0-ab11-0b010493b81f" />
+<img width="436" height="562" alt="image" src="https://github.com/user-attachments/assets/47b2b098-89a3-4eb3-9284-7e5d4993d480" />
+
 
 
