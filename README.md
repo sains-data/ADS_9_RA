@@ -28,5 +28,15 @@
 # Struktur :
 <img width="436" height="562" alt="image" src="https://github.com/user-attachments/assets/47b2b098-89a3-4eb3-9284-7e5d4993d480" />
 
-
-
+# Interpretasi Hasil :
+H₀ (hipotesis nol):
+Tidak ada perbedaan median IPK antara mahasiswa Tidak Bekerja dan Bekerja.
+H₁ (hipotesis alternatif):
+Ada perbedaan median IPK antara kedua kelompok.
+p-value = 0.05956 (≈ 0.06)
+Dengan tingkat signifikansi umum α = 0.05, maka:
+p-value > 0.05 → Gagal menolak H₀
+Artinya:
+Tidak terdapat perbedaan signifikan secara statistik dalam median IPK antara mahasiswa yang Tidak Bekerja dan yang Bekerja.
+Kesimpulan Simpel :
+Uji Mann–Whitney menunjukkan bahwa status pekerjaan (Tidak Bekerja vs Bekerja) tidak memberikan perbedaan signifikan terhadap capaian IPK mahasiswa.
