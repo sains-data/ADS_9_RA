@@ -5,19 +5,19 @@
 3. Afriza Azmi_124450110
 4. Djofy Prianda Banu_124450117
 
- Cara Menjalankan Script :
+# Cara Menjalankan Script :
 1.Simpan file dataset dengan nama "Copy of Dataset Tugas Besar ADS 2025 - Karakteristik Mahasiswa (3).csv" di direktori kerja yang sama dengan script R
 2.jalankan script secara berurutan dari awal hingga akhir
 3.Pastikan semua package yang diperlukan sudah terinstal
 
- Paket R yang Digunakan :
+# Paket R yang Digunakan :
 1.readr - untuk membaca file CSV
 2.dplyr - untuk manipulasi data
 3.car - untuk uji Levene (homogenitas varians)
 4.knitr - untuk membuat tabel yang rapi
 5.broom - untuk merapikan output uji statistik
 
- Penjelasan Singkat Dataset :
+# Penjelasan Singkat Dataset :
 1.Dataset berisi karakteristik mahasiswa dengan fokus pada:
 2.IPK (Indeks Prestasi Kumulatif) sebagai variabel numerik
 3.Status Pekerjaan sebagai variabel kategorikal dengan tiga kategori:
@@ -25,7 +25,7 @@
 -Paruh Waktu
 -Penuh Waktu
 
- Struktur :
+# Struktur :
  tugas_besar_ads_2025/
 │
 ├── 01_raw_data/
